@@ -1,5 +1,5 @@
 package com.chavesgu.images_picker;
-
+import android.media.MediaMetadataRetriever
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -293,7 +293,10 @@ public class ImagesPickerPlugin implements FlutterPlugin, MethodCallHandler, Act
   }
 
   private String createVideoThumb(String path) {
-    Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.FULL_SCREEN_KIND);
+//    Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.FULL_SCREEN_KIND);
+    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+    retriever.setDataSource(path);
+    Bitmap bitmap = retriever.getFrameAtTime();
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
     try {
